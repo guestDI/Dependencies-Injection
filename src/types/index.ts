@@ -3,6 +3,10 @@ export interface User {
   name: string;
 }
 
+export interface IUsers {
+  getUsers: () => User[]
+}
+
 export interface ApiConfig {
   path: string;
   resources: { [key: string]: string };
