@@ -7,3 +7,16 @@ export interface ApiConfig {
   path: string;
   resources: { [key: string]: string };
 }
+
+export interface IConfig {
+  api: ApiConfig;
+}
+
+export interface IHttp {
+  get: (url: string) => {};
+}
+
+export interface ILogger {
+  info: (message: string) => void;
+  error: (message: string) => void;
+}

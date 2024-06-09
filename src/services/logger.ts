@@ -1,4 +1,8 @@
-export class Logger {
+import { ILogger } from "src/types";
+
+export class Logger implements ILogger {
+  static $singleton = true;
+
   info(message: string) {
     const date = new Date().toISOString();
 
