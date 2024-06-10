@@ -1,8 +1,11 @@
-import type { User, IUsers } from './types';
+import type { IUsers, User } from './types';
 import { createIoCContainer } from './ioc';
+import { config } from './services/config';
 
-const renderUsers = async (usersServiceInstance: IUsers) => {
-  const usersService = usersServiceInstance;
+const ioc = createIoCContainer();
+
+const renderUsers = async () => {
+  const usersService: IUsers = ioc.resolve('users')
   const users = await usersService.getUsers();
 
   const listNode = document.getElementById('users-list');
@@ -15,17 +18,15 @@ const renderUsers = async (usersServiceInstance: IUsers) => {
   });
 };
 
-const app = (usersServiceInstance: IUsers) => {
-  renderUsers(usersServiceInstance);
+const app = () => {
+  ioc.register('config', config);
+  renderUsers();
 };
 
 window.onload = (event: Event) => {
-  const ioc = createIoCContainer();
-
   const logger = ioc.resolve('logger');
-  const usersServiceInstance = ioc.resolve('users')
 
   logger.info('Page is loaded.');
 
-  app(usersServiceInstance);
+  app();
 };
