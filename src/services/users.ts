@@ -1,16 +1,16 @@
-import { HTTP } from './http';
-
-import type { ApiConfig, User } from '../types';
+import type { User, IConfig, IHttp } from '../types';
 export class Users {
-  http: HTTP;
-  apiConfig: ApiConfig;
+  _http: IHttp;
+  _config: IConfig
 
-  constructor(apiConfig: ApiConfig) {
-    this.http = new HTTP(apiConfig);
-    this.apiConfig = apiConfig;
+  static $inject = ['config', 'http'];
+
+  constructor( config: IConfig, http: IHttp) {
+    this._http = http;
+    this._config = config;
   }
 
   getUsers() {
-    return this.http.get(this.apiConfig.resources.users) as unknown as User[];
+    return this._http.get(this._config.api.resources.users) as unknown as User[];
   }
 }
